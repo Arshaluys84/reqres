@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { URL } from "../../helpers/config";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
 
 import "./index.css";
 
 export const Login = ({ onLogin }) => {
-  const [loginData, setLoginData] = useState({ mail: "", password: "" });
+  const [error, setError] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const onChangeHandler = (event) => {
     setLoginData((prev) => ({
       ...prev,
@@ -14,12 +17,30 @@ export const Login = ({ onLogin }) => {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    if (loginData.mail.length < 5 || loginData.password.length < 5) {
+    if (loginData.email.length < 5 || loginData.password.length < 5) {
       return;
     }
 
-    onLogin(true);
-    setLoginData({ mail: "", password: "" });
+    fetch(`${URL}api/login`, {
+      method: "POST",
+      body: JSON.stringify(loginData),
+      headers: {
+        "Content-type": "Application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        for (const key in data) {
+          if (key === "token" && data[key]) {
+            onLogin(true);
+            setLoginData({ mail: "", password: "" });
+            setIsValidated(true);
+          } else {
+            setError(data[key]);
+            setIsValidated(false);
+          }
+        }
+      });
   };
 
   return (
@@ -30,8 +51,8 @@ export const Login = ({ onLogin }) => {
           type="email"
           id="login"
           placeholder="Enter your mail"
-          name="mail"
-          value={loginData.mail}
+          name="email"
+          value={loginData.email}
           onChange={onChangeHandler}
         />
         <label htmlFor="password">Password:</label>
@@ -43,8 +64,10 @@ export const Login = ({ onLogin }) => {
           value={loginData.password}
           onChange={onChangeHandler}
         />
+
         <Button>Login</Button>
       </form>
+      {!isValidated && <p>{error}</p>}
     </div>
   );
 };

@@ -5,4 +5,10 @@
     justify-content: center;
     align-items: center;
     background-color: #194875;
+    flex-direction: column;
+  }
+
+  p{
+    color: red;
+    font-size: 2rem;
   }
