@@ -1,1 +1,1 @@
-export const URL = "https://reqres.in/";
+export const URL = "https://reqres.in/api/";

@@ -3,6 +3,7 @@ import { Login } from "./components/Login";
 
 import { Pagination } from "react-pagination-bar";
 import "react-pagination-bar/dist/index.css";
+import { UsersTable } from "./components/UsersTable";
 
 const App = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -19,6 +20,7 @@ const App = () => {
       {isLogin && (
         <div>
           helllooooo
+          <UsersTable />
           <Pagination
             initialPage={currentPage}
             itemsPerPage={pagePostsLimit}

@@ -21,7 +21,7 @@ export const Login = ({ onLogin }) => {
       return;
     }
 
-    fetch(`${URL}api/login`, {
+    fetch(`${URL}login`, {
       method: "POST",
       body: JSON.stringify(loginData),
       headers: {
