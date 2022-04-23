@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { URL } from "../../helpers/config";
+import { useState } from "react";
+import { Backdrop } from "../UI/Backdrop";
 import { Button } from "../UI/Button";
+import { DeletingModal } from "../UI/DeletingModal";
+import { Modal } from "../UI/Modal";
 
 import "./index.css";
 
-export const UsersTable = () => {
-  const [usersData, setUsersData] = useState([]);
-  const fetchData = async () => {
-    const resp = await fetch(`${URL}users`);
-    const data = await resp.json();
-    console.log(data.data);
-    setUsersData(data.data);
+export const UsersTable = ({ userHandler, usersData }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [userData, setUserData] = useState({});
+  const onClickHandler = (user) => {
+    userHandler(user.id);
   };
-  useEffect(() => {
-    // fetch(`${URL}users`, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((data) =>{
+  const onEditHandler = (user) => {
+    setUserData(user);
+    setIsEditing(true);
+  };
 
-    //   });
-    fetchData();
-  }, []);
+  const onModalSubmitHandler = (isEdit) => {
+    setIsEditing(isEdit);
+    setIsDeleting(isEdit);
+  };
+  const onDeleteHandler = (user) => {
+    setIsDeleting(true);
+  };
   return (
     <div>
       <div className="table-container">
@@ -39,20 +40,24 @@ export const UsersTable = () => {
           </thead>
           <tbody className="table-body">
             {usersData.map((user) => (
-              <tr
-                key={user.id}
-                // onClick={() => history.push(`/user/${user.id}`)}
-              >
+              <tr key={user.id}>
                 <td>
                   <span className="table-id">{user.id}</span>
                 </td>
                 <td>
                   <span className="table-fullname">
-                    <img src={user.avatar} alt={user.first_name} />
+                    <img
+                      src={user.avatar}
+                      alt={user.first_name}
+                      onClick={() => onClickHandler(user)}
+                    />
                   </span>
                 </td>
                 <td>
-                  <span className="table-id">
+                  <span
+                    className="table-id"
+                    onClick={() => onClickHandler(user)}
+                  >
                     {user.first_name} {user.last_name}
                   </span>
                 </td>
@@ -61,8 +66,10 @@ export const UsersTable = () => {
                 </td>
                 <td>
                   <div className="table-actions">
-                    <Button>Edit</Button>
-                    <Button>Delete</Button>
+                    <Button onClick={() => onEditHandler(user)}>Edit</Button>
+                    <Button onClick={() => onDeleteHandler(user)}>
+                      Delete
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -70,6 +77,17 @@ export const UsersTable = () => {
           </tbody>
         </table>
       </div>
+      {isEditing && <Backdrop />}
+      {isEditing && (
+        <Modal user={userData} onModalSubmitHandler={onModalSubmitHandler} />
+      )}
+      {isDeleting && <Backdrop />}
+      {isDeleting && (
+        <DeletingModal
+          user={userData}
+          onModalSubmitHandler={onModalSubmitHandler}
+        />
+      )}
     </div>
   );
 };

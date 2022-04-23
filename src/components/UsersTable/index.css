@@ -13,7 +13,7 @@
   }
   
   .table-head tr th {
-    padding: 10px 20px;
+    padding: 10px 2px;
     color: #9cb3c9;
     text-align: left;
     font-size: 14px;
@@ -27,6 +27,7 @@
   }
   
   .table-body tr td {
+     text-align: center;
     padding: 10px 0px;
     border-bottom: 2px solid #5e81a1;
     color: #fff;
@@ -41,8 +42,9 @@
   
   .table-id {
     color: #9cb3c9;
-    margin-right: 6px;
+   
   }
+  
   .table-actions button{
-    margin: 5px 0;
+    margin: 5px 5px;
   }
