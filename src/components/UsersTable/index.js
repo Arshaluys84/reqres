@@ -8,10 +8,12 @@ import { EditingModal } from "../UI/EditingModal";
 import "./index.css";
 
 export const UsersTable = ({ userHandler, usersData }) => {
+
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
   const [userData, setUserData] = useState({});
+
   const onClickHandler = (user) => {
     userHandler(user.id);
   };
@@ -25,12 +27,15 @@ export const UsersTable = ({ userHandler, usersData }) => {
     setIsDeleting(isClicked);
     setIsCreating(isClicked);
   };
+
   const onDeleteHandler = (user) => {
     setIsDeleting(true);
   };
+
   const onCreateHandler = (user) => {
     setIsCreating(true);
   };
+  
   return (
     <div>
       <div className="create-user">

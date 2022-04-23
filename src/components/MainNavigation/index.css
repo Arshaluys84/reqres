@@ -1,26 +1,25 @@
 .header {
-   
     height: 5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 10%;
-    background-color: #d1d4e7;
     border-bottom: 1px solid #3c74c9;
+    background-color: #d1d4e7;
   }
   
   .logo {
     font-size: 2rem;
-    color: white;
     font-weight: bold;
+    color: white;
   }
   
   .header ul {
+    display: flex;
+    align-items: baseline;
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: baseline;
   }
   
   .header li {

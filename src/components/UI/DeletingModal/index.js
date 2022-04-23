@@ -1,4 +1,4 @@
-import { URL } from "../../../helpers/config";
+import { fetchDataHandler, URL } from "../../../helpers/config";
 import { Button } from "../Button";
 
 import "./index.css";
@@ -8,7 +8,8 @@ export const DeletingModal = ({ user, onModalSubmitHandler }) => {
     onModalSubmitHandler(false);
   };
   const onConfirmHandler = () => {
-    fetch(`${URL}users/${user.id}`, {
+    fetchDataHandler({
+      url: `${URL}users/${user.id}`,
       method: "DELETE",
     }).then((data) => {
       onModalSubmitHandler(false);

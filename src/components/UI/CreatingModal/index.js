@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { URL } from "../../../helpers/config";
+import {
+  fetchDataHandler,
+  onChangeHandler,
+  URL,
+} from "../../../helpers/config";
 import { Button } from "../Button";
 import { Input } from "../Input";
 
@@ -11,21 +15,17 @@ export const CreatingModal = ({ onModalSubmitHandler }) => {
     job: "",
   });
 
-  const onChangeHandler = (event) => {
-    setNewUserData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
   const submitHandler = (event) => {
     event.preventDefault();
+
     if (newUserData.name.length < 1 || newUserData.job.length < 5) {
       return;
     }
-    fetch(`${URL}users`, {
+
+    fetchDataHandler({
+      url: `${URL}users`,
       method: "POST",
-      body: JSON.stringify(newUserData),
+      body: newUserData,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -36,6 +36,7 @@ export const CreatingModal = ({ onModalSubmitHandler }) => {
         onModalSubmitHandler(false);
       });
   };
+
   return (
     <form onSubmit={submitHandler} className="modal">
       <label htmlFor="name">Name:</label>
@@ -45,7 +46,7 @@ export const CreatingModal = ({ onModalSubmitHandler }) => {
         placeholder="more 1 letter"
         name="name"
         value={newUserData.name}
-        onChange={onChangeHandler}
+        onChange={(e) => onChangeHandler(e, setNewUserData)}
       />
       <label htmlFor="job">Job:</label>
       <Input
@@ -54,7 +55,7 @@ export const CreatingModal = ({ onModalSubmitHandler }) => {
         placeholder="more 5 letters"
         name="job"
         value={newUserData.job}
-        onChange={onChangeHandler}
+        onChange={(e) => onChangeHandler(e, setNewUserData)}
       />
 
       <Button>Create</Button>

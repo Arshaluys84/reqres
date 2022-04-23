@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import { URL } from "./helpers/config";
 
-import MainNavigation from "./components/MainNavigation";
+import { MainNavigation } from "./components/MainNavigation";
 import { Login } from "./components/Login";
 import { UsersTable } from "./components/UsersTable";
 import { UserDetail } from "./components/UserDetail";
@@ -13,6 +13,7 @@ import "react-pagination-bar/dist/index.css";
 import "./App.css";
 
 const App = () => {
+  
   const [singleUser, setSingleUser] = useState(1);
   const [isLogin, setIsLogin] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);

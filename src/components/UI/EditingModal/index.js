@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { URL } from "../../../helpers/config";
+import {
+  fetchDataHandler,
+  onChangeHandler,
+  URL,
+} from "../../../helpers/config";
 import { Button } from "../Button";
 import { Input } from "../Input";
 
@@ -11,30 +15,26 @@ export const EditingModal = ({ user, onModalSubmitHandler }) => {
     job: user.job || "",
   });
 
-  const onChangeHandler = (event) => {
-    setEditingData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  };
+  // const onChangeHandler = (event) => {
+  //   setEditingData((prev) => ({
+  //     ...prev,
+  //     [event.target.name]: event.target.value,
+  //   }));
+  // };
 
   const submitHandler = (event) => {
     event.preventDefault();
     if (editingData.name.length < 3 || editingData.job.length < 5) {
       return;
     }
-    fetch(`${URL}users/${user.id}`, {
+
+    fetchDataHandler({
+      url: `${URL}users/${user.id}`,
       method: "PATCH",
-      body: JSON.stringify(editingData),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
+      body: editingData,
     })
       .then((resp) => resp.json())
       .then((data) => {
-        console.log(data);
-        console.log(editingData, user.id);
         onModalSubmitHandler(false);
       });
     console.log(editingData, user.id);
@@ -48,7 +48,7 @@ export const EditingModal = ({ user, onModalSubmitHandler }) => {
         placeholder="Edit name"
         name="name"
         value={editingData.name}
-        onChange={onChangeHandler}
+        onChange={(e) => onChangeHandler(e, setEditingData)}
       />
       <label htmlFor="job">Job:</label>
       <Input
@@ -57,7 +57,7 @@ export const EditingModal = ({ user, onModalSubmitHandler }) => {
         placeholder="job"
         name="job"
         value={editingData.job}
-        onChange={onChangeHandler}
+        onChange={(e) => onChangeHandler(e, setEditingData)}
       />
 
       <Button>Edit</Button>

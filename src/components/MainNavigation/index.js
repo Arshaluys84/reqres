@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+
 import "./index.css";
 
-function MainNavigation({ isLogin, onLogin }) {
+export const MainNavigation = ({ isLogin, onLogin }) => {
   const onLogoutHandler = () => {
     onLogin(false);
   };
@@ -22,6 +23,4 @@ function MainNavigation({ isLogin, onLogin }) {
       </nav>
     </header>
   );
-}
-
-export default MainNavigation;
+};

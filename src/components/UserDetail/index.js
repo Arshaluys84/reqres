@@ -5,15 +5,18 @@ import "./index.css";
 
 export const UserDetail = ({ userId }) => {
   const [singleUser, setSingleUser] = useState(1);
+
   const fetchUser = useCallback(async () => {
     const resp = await fetch(`${URL}users/${userId}`);
     const data = await resp.json();
     setSingleUser(data.data);
     console.log(data);
   }, [userId]);
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
   return (
     <div className="item">
       <div className="image">
