@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate, Route, Routes } from "react-router-dom";
 import { Login } from "./components/Login";
 import { URL } from "./helpers/config";
-import { Pagination } from "react-pagination-bar";
-import "react-pagination-bar/dist/index.css";
 import { UsersTable } from "./components/UsersTable";
 import { UserDetail } from "./components/UserDetail";
-import { useNavigate, Route, Routes } from "react-router-dom";
+
+import { Pagination } from "react-pagination-bar";
+
+import "react-pagination-bar/dist/index.css";
+import "./App.css";
 
 const App = () => {
   const [singleUser, setSingleUser] = useState(1);
@@ -24,6 +27,7 @@ const App = () => {
     setPagePostsLimit(data.per_page);
     setTotalItems(data.total);
   }, [currentPage]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -33,10 +37,12 @@ const App = () => {
   const onLoginHandler = (loginProps) => {
     setIsLogin(loginProps);
   };
+
   const userHandler = (userId) => {
     setSingleUser(userId);
     navigate(`/table/${userId}`);
   };
+
   let Home = () => {
     return (
       <>
@@ -51,6 +57,7 @@ const App = () => {
       </>
     );
   };
+
   return (
     <div className="App">
       {!isLogin && <Login onLogin={onLoginHandler} />}

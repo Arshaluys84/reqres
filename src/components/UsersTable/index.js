@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Backdrop } from "../UI/Backdrop";
 import { Button } from "../UI/Button";
+import { CreatingModal } from "../UI/CreatingModal";
 import { DeletingModal } from "../UI/DeletingModal";
-import { Modal } from "../UI/Modal";
+import { EditingModal } from "../UI/EditingModal";
 
 import "./index.css";
 
 export const UsersTable = ({ userHandler, usersData }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
   const [userData, setUserData] = useState({});
   const onClickHandler = (user) => {
     userHandler(user.id);
@@ -18,15 +20,24 @@ export const UsersTable = ({ userHandler, usersData }) => {
     setIsEditing(true);
   };
 
-  const onModalSubmitHandler = (isEdit) => {
-    setIsEditing(isEdit);
-    setIsDeleting(isEdit);
+  const onModalSubmitHandler = (isClicked) => {
+    setIsEditing(isClicked);
+    setIsDeleting(isClicked);
+    setIsCreating(isClicked);
   };
   const onDeleteHandler = (user) => {
     setIsDeleting(true);
   };
+  const onCreateHandler = (user) => {
+    setIsCreating(true);
+  };
   return (
     <div>
+      <div className="create-user">
+        <Button btn="create-btn" onClick={onCreateHandler}>
+          Create user
+        </Button>
+      </div>
       <div className="table-container">
         <table className="table">
           <thead className="table-head">
@@ -79,11 +90,21 @@ export const UsersTable = ({ userHandler, usersData }) => {
       </div>
       {isEditing && <Backdrop />}
       {isEditing && (
-        <Modal user={userData} onModalSubmitHandler={onModalSubmitHandler} />
+        <EditingModal
+          user={userData}
+          onModalSubmitHandler={onModalSubmitHandler}
+        />
       )}
       {isDeleting && <Backdrop />}
       {isDeleting && (
         <DeletingModal
+          user={userData}
+          onModalSubmitHandler={onModalSubmitHandler}
+        />
+      )}
+      {isCreating && <Backdrop />}
+      {isCreating && (
+        <CreatingModal
           user={userData}
           onModalSubmitHandler={onModalSubmitHandler}
         />

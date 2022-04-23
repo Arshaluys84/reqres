@@ -5,7 +5,7 @@ import { Input } from "../Input";
 
 import "./index.css";
 
-export const Modal = ({ user, onModalSubmitHandler }) => {
+export const EditingModal = ({ user, onModalSubmitHandler }) => {
   const [editingData, setEditingData] = useState({
     name: user.first_name,
     job: user.job || "",
@@ -60,7 +60,7 @@ export const Modal = ({ user, onModalSubmitHandler }) => {
         onChange={onChangeHandler}
       />
 
-      <Button>Save</Button>
+      <Button>Edit</Button>
     </form>
   );
 };
