@@ -42,8 +42,10 @@
   
   .table-id {
     color: #9cb3c9;
-   
-  }
+   }
+   .table-id:hover {
+    color: white;
+   }
   
   .table-actions button{
     margin: 5px 5px;

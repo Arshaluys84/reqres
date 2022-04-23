@@ -8,7 +8,6 @@ import { EditingModal } from "../UI/EditingModal";
 import "./index.css";
 
 export const UsersTable = ({ userHandler, usersData }) => {
-
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
@@ -35,7 +34,7 @@ export const UsersTable = ({ userHandler, usersData }) => {
   const onCreateHandler = (user) => {
     setIsCreating(true);
   };
-  
+
   return (
     <div>
       <div className="create-user">
@@ -78,7 +77,12 @@ export const UsersTable = ({ userHandler, usersData }) => {
                   </span>
                 </td>
                 <td>
-                  <span className="table-id">{user.email}</span>
+                  <span
+                    className="table-id"
+                    onClick={() => onClickHandler(user)}
+                  >
+                    {user.email}
+                  </span>
                 </td>
                 <td>
                   <div className="table-actions">
