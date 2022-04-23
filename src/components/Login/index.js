@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { URL } from "../../helpers/config";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
@@ -9,12 +10,14 @@ export const Login = ({ onLogin }) => {
   const [error, setError] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
   const onChangeHandler = (event) => {
     setLoginData((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
     if (loginData.email.length < 5 || loginData.password.length < 5) {
@@ -35,6 +38,7 @@ export const Login = ({ onLogin }) => {
             onLogin(true);
             setLoginData({ mail: "", password: "" });
             setIsValidated(true);
+            navigate("/");
           } else {
             setError(data[key]);
             setIsValidated(false);

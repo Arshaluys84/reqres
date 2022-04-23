@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, Route, Routes } from "react-router-dom";
-import { Login } from "./components/Login";
 import { URL } from "./helpers/config";
+
+import MainNavigation from "./components/MainNavigation";
+import { Login } from "./components/Login";
 import { UsersTable } from "./components/UsersTable";
 import { UserDetail } from "./components/UserDetail";
 
@@ -21,7 +23,6 @@ const App = () => {
   const fetchData = useCallback(async () => {
     const resp = await fetch(`${URL}users?page=${currentPage}`);
     const data = await resp.json();
-    console.log(data);
     setUsersData(data.data);
     setCurrentPage(data.page);
     setPagePostsLimit(data.per_page);
@@ -60,6 +61,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <MainNavigation isLogin={isLogin} onLogin={onLoginHandler} />
       {!isLogin && <Login onLogin={onLoginHandler} />}
       {isLogin && (
         <>
